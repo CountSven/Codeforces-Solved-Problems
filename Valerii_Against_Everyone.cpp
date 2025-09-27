@@ -21,7 +21,16 @@ int main()
 			mp[a[i]]++;
 		}
 
-		if ( mp.size() != n ) cout << "YES" << "\n";
+		bool isPos = false;
+
+		for ( auto u : mp ) {
+			if ( u.second >= 2 ) {
+				isPos = true;
+				break;
+			}
+		}
+
+		if ( isPos ) cout << "YES" << "\n";
 		else cout << "NO" << "\n";
 
 		mp.clear();

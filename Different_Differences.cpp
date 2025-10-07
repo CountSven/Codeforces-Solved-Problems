@@ -10,24 +10,48 @@ int main()
 	cin >> t;
 
 	while ( t-- ) {
-		int K,N;
-		cin>>K>>N;
-		int D[40];
+		int k, n;
+		cin >> k >> n;
+		vector<int> v, r;
 
-		for(int i=0;i<K-1;i++)D[i]=1;
-		N-=K;
-		for(int i=K-2;i>0;i--)
-		{
-			if(N>=K-1-i)
-			{
-				N-=K-1-i;
-				for(int j=i;j<K-1;j++)D[j]++;
+		int cnt = 0, st = 0;
+
+		for ( int i = 1; i <= n; i += st ) {
+			v.push_back( i );
+			st++;
+			cnt++;
+
+			if ( cnt == k ) break;
+		}
+
+		r = v;
+
+		if ( cnt != k ) {
+			for ( int i = v.back()+1; i <= n; i++ ) {
+				v.push_back( i );
+				cnt++;
+
+				if ( cnt == k ) break;
 			}
 		}
-		int v=1;
-		cout<<"1";
-		for(int i=0;i<K-1;i++)cout<<" "<<(v+=D[i]);
-		cout<<"\n";
+
+		if ( cnt != k ) {
+			for ( int i = r.size()-2; i > 0; i-- ) {
+				for ( int j = r[i]+1; j <= r[i+1]-1; j++ ) {
+					 v.push_back( j );
+					cnt++;
+
+					if ( cnt == k ) break;
+				}
+
+				if ( cnt == k ) break;
+			}
+		}
+
+		sort( v.begin(), v.end() );
+
+		for ( auto u : v ) cout << u << " ";
+		cout << "\n";
 	}
 
 	return 0;

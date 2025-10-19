@@ -10,22 +10,20 @@ int main()
 	cin >> t;
 
 	while ( t-- ) {
-		long long n;
+		long long n, cost = 0;
 		cin >> n;
 
-		long long cost = 0;
-
 		while ( n ) {
-			long long cur = 1, pow = 0;
+			long long cur = log ( n ) / log ( 3 );
 
-			while ( cur * 3 <= n ) {
-				cur *= 3;
-				pow++;
-			}
+			if ( pow( 3, cur + 1 ) == n ) cur++;
 
-			cost += cur * 3 + cur / 3 * pow;
+			cost += pow( 3, cur + 1 ) + cur * pow( 3, cur - 1 );
+
+			cur = pow( 3, cur );
+
 			n -= cur;
-		}		
+		}
 
 		cout << cost << "\n";
 	}

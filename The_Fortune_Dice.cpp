@@ -9,8 +9,8 @@ int main()
 	int x;
 	cin >> x;
 
-	if ( x >= 2 && x <= 12 ) cout << "YES" << "\n";
-	else cout << "NO" << "\n";
+	if ( x >= 2 && x <= 12 ) cout << "Yes" << "\n";
+	else cout << "No" << "\n";
 
 	return 0;
 }

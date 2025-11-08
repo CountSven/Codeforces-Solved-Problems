@@ -10,30 +10,17 @@ int main()
     cin >> t;
 
     while (t--) {
-        long long N, M;
-        cin >> N >> M;
+        int n, m;
+        cin >> n >> m;
 
-        if (N == 2) {
-            if (M % 2 == 0)
-                cout << "1 2\n";
-            else
-                cout << "2 1\n";
-            continue;
+        if ( n == 2 && m % 2 == 0 ) cout << 1 << " " << 2 << "\n";
+        else {
+        	if ( m >= n ) m = n;
+
+        	for ( int i = n; i > n-m; i-- ) cout << i << " ";
+        	for ( int i = 1; i <= n-m; i++ ) cout << i << " ";
+        	cout << "\n";
         }
-
-        if (M >= N) {
-            for (long long i = N; i >= 1; i--)
-                cout << i << " ";
-            cout << "\n";
-            continue;
-        }
-
-        for (long long i = N; i > N - M; i--)
-            cout << i << " ";
-        
-        for (long long i = 1; i <= N - M; i++)
-            cout << i << " ";
-        cout << "\n";
     }
 
 	return 0;

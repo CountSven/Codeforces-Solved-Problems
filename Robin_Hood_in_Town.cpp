@@ -25,10 +25,21 @@ int main()
 		else {
 			sort( a, a+n );
 
-			long long cur = 1LL * a[n/2] * ( n * 2 ) + 1 - sum;
+			long long low = 0, high = 1e18, res = 0;
 
-			if ( cur < 0 ) cout << 0 << "\n";
-			else cout << cur << "\n";
+			while ( low <= high ) {
+				long long mid = low + ( high - low ) / 2;
+
+				long long cur = sum + mid;
+
+				if ( 1LL * a[n/2] * n * 2 < cur ) {
+					res = mid;
+					high = mid-1;
+				}
+				else low = mid+1;
+			}
+
+			cout << res << "\n";
 		}
 	}
 

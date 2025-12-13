@@ -10,27 +10,51 @@ int main()
 	cin >> t;
 
 	while ( t-- ) {
-		int n;
+		long long n;
 		cin >> n;
-		int a[n];
+		long long a[n];
 
-		int evCnt = 0, odCnt = 0;
-		long long evSum = 0, odSum = 0;
+		long long sum = 0;
 
 		for ( int i = 0; i < n; i++ ) {
 			cin >> a[i];
-			if ( ( i + 1 ) % 2 ) {
-				odSum += a[i];
-				odCnt++;
-			}
-			else {
-				evSum += a[i];
-				evCnt++;
-			}
+			sum += a[i];
 		}
 
-		if ( ( evSum % evCnt == 0 ) && ( odSum % odCnt == 0 ) && ( evSum / evCnt == odSum / odCnt ) ) cout << "YES" << "\n";
-		else cout << "NO" << "\n";	
+		if ( sum % n ) cout << "NO" << "\n";
+		else {
+			long long tar = sum / n;
+
+			for ( int i = 1; i < n-1; i++ ) {
+				if ( a[i-1] > tar ) {
+					while ( a[i-1] > tar ) {
+						a[i-1]--;
+						a[i+1]++;
+					}
+				}
+				else if ( a[i-1] < tar ) {
+					while ( a[i-1] < tar ) {
+						a[i-1]++;
+						a[i+1]--;
+					}
+				}
+			}
+
+			// for ( int i = 0; i < n; i++ ) cout << a[i] << " ";
+			// cout << "\n";
+
+			int f = 0;
+
+			for ( int i = 0; i < n; i++ ) {
+				if ( a[i] != tar ) {
+					f = 1;
+					break;
+				}
+			}
+
+			if ( !f ) cout << "YES" << "\n";
+			else cout << "NO" << "\n";
+		}
 	}
 
 	return 0;

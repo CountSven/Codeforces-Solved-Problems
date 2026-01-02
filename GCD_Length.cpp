@@ -13,11 +13,17 @@ int main()
 		long long a, b, c;
 		cin >> a >> b >> c;
 
-		long long x = pow( 10, c-1 );
-		long long y = pow( 10, c-1 );
+		long long x = pow( 10, a-1 );
+		long long y = pow( 10, b-1 );
 
-		while ( x < ( long long )pow( 10, a - 1 ) ) x *= 2;
-		while ( y < ( long long )pow( 10, b - 1 ) ) y *= 5;
+		if ( c == 1 ) {
+			if ( max( x, y ) == x ) x += 5;
+			else y += 5;
+		}
+		else {
+			if ( max( x, y ) == x ) x += pow( 10, c-1 );
+			else y += pow( 10, c-1 );
+		}
 
 		cout << x << " " << y << "\n";
 	}

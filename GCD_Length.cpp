@@ -16,14 +16,8 @@ int main()
 		long long x = pow( 10, a-1 );
 		long long y = pow( 10, b-1 );
 
-		if ( c == 1 ) {
-			if ( max( x, y ) == x ) x += 5;
-			else y += 5;
-		}
-		else {
-			if ( max( x, y ) == x ) x += pow( 10, c-1 );
-			else y += pow( 10, c-1 );
-		}
+		if ( max( x, y ) == x ) x += pow( 10, c-1 );
+		else y += pow( 10, c-1 );
 
 		cout << x << " " << y << "\n";
 	}

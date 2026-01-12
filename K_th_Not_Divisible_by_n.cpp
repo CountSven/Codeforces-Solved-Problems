@@ -13,9 +13,16 @@ int main()
 		int n, k;
 		cin >> n >> k;
 
-		int req = ( k - 1 ) / ( n - 1 );
+		if ( n == k ) cout << n + 1 << "\n";
+		else if ( n > k ) cout << k << "\n";
+		else {
+			int req = k / ( n - 1 );
+			int res = k + req;
 
-		cout << k + req << endl;
+			if ( res % n == 0 ) res--;
+
+			cout << res << "\n";
+		}
 	}
 
 	return 0;

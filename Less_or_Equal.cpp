@@ -8,29 +8,20 @@ int main()
 
 	int n, k;
 	cin >> n >> k;
-	int a[n];
+	int a[n+1];
 
-	for ( int i = 0; i < n; i++ ) cin >> a[i];
+	for ( int i = 1; i <= n; i++ ) cin >> a[i];
 
-	sort( a, a+n );
+	sort( a + 1, a + n + 1 );
 
-	int l = 0, cnt = 0, val = 1;
+	int idx = k, val;
 
-	while ( l < n && a[l] == val ) {
-		cnt++;
-		l++;
-	}	
-	while ( l < n && cnt < k ) {
-		cnt++;
-		while ( l+1 < n && a[l+1] == a[l] ) {
-			cnt++;
-			l++;
-		}
-		l++;
-		val = a[l-1];
-	}
+	if ( idx > 0 ) val = a[idx];
+	else val = 1;
 
-	if ( cnt == k && val >= 1 && val <= 1000000000 ) cout << val << "\n";
+	while ( idx + 1 <= n && a[idx + 1] == val ) idx++;
+
+	if ( idx == k && val <= 1000000000 ) cout << val << "\n";
 	else cout << -1 << "\n";
 
 	return 0;

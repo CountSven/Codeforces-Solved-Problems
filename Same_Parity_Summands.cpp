@@ -13,63 +13,32 @@ int main()
 		int n, k;
 		cin >> n >> k;
 
-		if ( n < k ) cout << "NO" << "\n";
-		else {
-			if ( n % k == 0 ) {
-				cout << "YES" << "\n";
-				int val = n / k;
-				while ( k-- ) cout << val << " ";
-				cout << "\n";
-			}
-			else {
-				if ( n % 2 && k % 2 == 0 ) cout << "NO" << "\n";
-				else {
-					if ( k <= ( n / 2 ) || ( n % 2 == k % 2 ) ) {
-						cout << "YES" << "\n";
+		int odRem = n, evRem = n;
 
-						if ( k <= ( n / 2 ) && n % 2 == 0 ) {
-							vector<int> v;
+		vector<int> od, ev;
 
-							int sum = 0;
-
-							while ( k-- ) {
-								v.push_back( 2 );
-								sum += 2;
-							}
-
-							v.pop_back();
-
-							sum -= 2;
-
-							v.push_back( n - sum );
-
-							for ( auto u : v ) cout << u << " ";
-							cout << "\n";
-						}
-						else {
-							vector<int> v;
-
-							int sum = 0;
-
-							while ( k-- ) {
-								v.push_back( 1 );
-								sum += 1;
-							}
-
-							v.pop_back();
-
-							sum -= 1;
-
-							v.push_back( n - sum );
-
-							for ( auto u : v ) cout << u << " ";
-							cout << "\n";
-						}
-					}
-					else cout << "NO" << "\n";
-				}
-			}
+		for ( int i = 1; i < k; i++ ) {
+			od.push_back( 1 );
+			odRem -= 1;
+			ev.push_back( 2 );
+			evRem -= 2;
 		}
+
+		if ( odRem > 0 && odRem % 2 ) {
+			od.push_back( odRem );
+
+			cout << "YES" << "\n";
+			for ( auto u : od ) cout << u << " ";
+			cout << "\n";
+		}
+		else if ( evRem > 0 && evRem % 2 == 0 ) {
+			ev.push_back( evRem );
+
+			cout << "YES" << "\n";
+			for ( auto u : ev ) cout << u << " ";
+			cout << "\n";
+		}
+		else cout << "NO" << "\n";
 	}
 
 	return 0;

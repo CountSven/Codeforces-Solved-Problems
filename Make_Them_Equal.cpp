@@ -16,7 +16,7 @@ int main()
 		string s;
 		cin >> s;
 
-		vector<int> v( 3e5+5, 0 );
+		vector<int> v( n+5, 0 );
 
 		int f = 0;
 

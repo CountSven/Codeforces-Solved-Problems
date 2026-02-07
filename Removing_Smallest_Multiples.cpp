@@ -14,24 +14,23 @@ int main()
 		cin >> n;
 		string s;
 		cin >> s;
-		
-		vector<int> v( n + 1, 0 ), need( n + 1, 0 );
+		s = '#' + s;
 
-		for ( int i = 0; i < n; i++ ) {
-			if ( s[i] == '1' ) v[i+1] = 1;
-		}
+		vector<int> v(n+1);
 
-		for ( int i = n; i >= 1; i-- ) {
+		for ( int i = 1; i <= n; i++ ) v[i] = INT_MAX;
+
+		for ( int i = 1; i <= n; i++ ) {
 			for ( int j = i; j <= n; j += i ) {
-				if ( !v[j] ) need[j] = i;
-				else break;
+				if ( s[j] == '1' ) break;
+				else v[j] = min( v[j], i );
 			}
 		}
 
 		long long res = 0;
 
 		for ( int i = 1; i <= n; i++ ) {
-			if ( !v[i] ) res += need[i];
+			if ( s[i] == '0' ) res += v[i];
 		}
 
 		cout << res << "\n";

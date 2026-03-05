@@ -3,28 +3,36 @@ using namespace std;
 
 int main()
 {
-	ios_base::sync_with_stdio(false);
-	cin.tie(nullptr);
-
-	int t;
-	cin >> t;
-
-	while ( t-- ) {
-		int n, m, k;
-		cin >> n >> m >> k;
-
-		long long l = 1, r = m;
-
-		while ( l < r ) {
-			long long mid = ( l + r ) / 2;
-			long long cur = m - ( m / ( mid + 1 ) );
-
-			if ( cur * n >= k ) r = mid;
-			else l = mid + 1;
-		}
-
-		cout << l << "\n";
-	}
-
-	return 0;
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int t;
+    cin >> t;
+    
+    while ( t-- ) {
+        long long n, m, k;
+        cin >> n >> m >> k;
+        
+        long long low = 1, high = m, res = m;
+        
+        while ( low <= high ) {
+            long long mid = ( low + high ) / 2;
+            
+            long long blocks = ( m / ( mid + 1 ) );
+            long long now = blocks * mid;
+            long long ext = m % ( mid + 1 );
+            long long cur = ( now + ext ) * n;
+            // cout << mid << " " << blocks << " " << now << " " << ext << " " << cur << "\n";
+            
+            if ( cur >= k ) {
+                res = mid;
+                high = mid-1;
+            }
+            else low = mid+1;
+        }
+        
+        cout << res << "\n";
+    }
+    
+    return 0;
 }

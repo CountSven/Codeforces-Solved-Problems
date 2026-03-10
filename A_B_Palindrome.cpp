@@ -6,75 +6,77 @@ void solve()
 	int a, b;
 	string s;
 	cin >> a >> b >> s;
- 
+
+	if ( a % 2 && b % 2 ) {
+		cout << -1 << "\n";
+		return;
+	}
+
 	int n = a + b;
-	 
-	s = "0" + s;
- 
-	for (int i = 1; i <= n; i++){
-		if (s[i] != s[n + 1 - i] && s[i] != '?' && s[n + 1 - i] != '?'){
+
+	for ( int i = 0; i < ( n / 2 ); i++ ) {
+		if ( s[i] != '?' && s[n-i-1] != '?' && s[i] != s[n-i-1] ) {
 			cout << -1 << "\n";
 			return;
-		}
- 
-		if (s[i] != s[n + 1 - i]){
-			if (s[i] == '?') s[i] = s[n + 1 - i];
-			else if (s[n + 1 - i] == '?') s[n + 1 - i] = s[i];
 		}
 	}
 
-	int cnt0 = 0, cnt1 = 0;
-	for (int i = 1; i <= n; i++){
-		if (s[i] == '?'){
-			if (i != (n + 1 - i))
-			cnt0++;
-			else cnt1++;
-		}
-		else if (s[i] == '0') a--;
-		else b--;
+	for ( int i = 0; i < n; i++ ) {
+		if ( s[i] == '0' ) a--;
+		else if ( s[i] == '1' ) b--;
 	}
- 
-	cnt0 /= 2;
- 
-	if (a < 0 || b < 0){
-		cout << -1 << "\n";
-		return;
-	}
- 
-	if (cnt1 != 0){
-		if (a % 2 == 1){
-			s[(n + 1) / 2] = '0';
+
+	for ( int i = 0; i < ( n / 2 ); i++ ) {
+		if ( s[i] == '?' && s[n-i-1] == '0' ) {
+			s[i] = '0';
 			a--;
-		} else if (b % 2 == 1) {
-			s[(n + 1) / 2] = '1';
+		}
+		else if ( s[i] == '?' && s[n-i-1] == '1' ) {
+			s[i] = '1';
 			b--;
-		} else {
-			cout << -1 << "\n";
-			return;
+		}
+		else if ( s[i] == '0' && s[n-i-1] == '?' ) {
+			s[n-i-1] = '0';
+			a--;
+		}
+		else if ( s[i] == '1' && s[n-i-1] == '?' ) {
+			s[n-i-1] = '1';
+			b--;
 		}
 	}
- 
-	if (a % 2 == 1 || b % 2 == 1){
-		cout << -1 << "\n";
-		return;
-	}
- 
-	for (int i = 1; i <= n; i++){
-		if (s[i] == '?'){
-			if (a > 0){
-				a -= 2;
+
+	for ( int i = 0; i < ( n / 2 ); i++ ) {
+		if ( s[i] == '?' && s[n-i-1] == '?' ) {
+			if ( a >= b ) {
 				s[i] = '0';
-				s[n + 1 - i] = '0';
-			} else {
-				b -= 2;
+				s[n-i-1] = '0';
+				a -= 2;
+			}
+			else {
 				s[i] = '1';
-				s[n + 1 - i] = '1';
+				s[n-i-1] = '1';
+				b -= 2;
 			}
 		}
 	}
- 
-	for (int i = 1; i <= n; i++) cout << s[i];
-	cout << "\n";
+
+	if ( n % 2 ) {
+		if ( s[n/2] == '?' ) {
+			if ( a ) {
+				s[n/2] = '0';
+				a--;
+			}
+			else {
+				s[n/2] = '1';
+				b--;
+			}
+		}
+	}
+
+	if ( a == 0 && b == 0 ) cout << s << "\n";
+	else cout << -1 << "\n";
+
+	return;
 }
 
 int main()

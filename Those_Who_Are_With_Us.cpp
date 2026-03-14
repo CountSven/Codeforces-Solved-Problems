@@ -1,6 +1,49 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+void solve()
+{
+	int n, m;
+	cin >> n >> m;
+	int a[n][m], mx = 0;
+
+	for ( int i = 0; i < n; i++ ) {
+		for ( int j = 0; j < m; j++ ) {
+			cin >> a[i][j];
+			mx = max( mx, a[i][j] );
+		}
+	}
+
+	vector<int> row(n), col(m);
+
+	int cnt = 0;
+
+	for ( int i = 0; i < n; i++ ) {
+		for ( int j = 0; j < m; j++ ) {
+			if ( a[i][j] == mx ) {
+				cnt++;
+				row[i]++;
+				col[j]++;
+			}
+		}
+	}
+
+	for ( int i = 0; i < n; i++ ) {
+		for ( int j = 0; j < m; j++ ) {
+			int curCnt = row[i] + col[j];
+			
+			if ( a[i][j] == mx ) curCnt--;
+
+			if ( curCnt == cnt ) {
+				cout << mx - 1 << "\n";
+				return;
+			}
+		}
+	}
+
+	cout << mx << "\n";
+}
+
 int main()
 {
 	ios_base::sync_with_stdio(false);
@@ -9,68 +52,7 @@ int main()
 	int t;
 	cin >> t;
 
-	while ( t-- ) {
-		int n, m;
-		cin >> n >> m;
-		int a[n+1][m+1];
-
-		int mx = 0;
-
-		for ( int i = 1; i <= n; i++ ) {
-			for ( int j = 1; j <= m; j++ ) {
-				cin >> a[i][j];
-				mx = max( mx , a[i][j] );
-			}
-		}
-
-		map<int, int> freqR, freqC;
-
-		vector<int> idxR, idxC;
-
-		int maxR = 0, maxC = 0, occ = 0;
-
-		for ( int i = 1; i <= n; i++ ) {
-			for ( int j = 1; j <= m; j++ ) {
-				if ( a[i][j] == mx ) {
-					occ++;
-					freqR[i]++;
-					freqC[j]++;
-					maxR = max( maxR, freqR[i] );
-					maxC = max( maxC, freqC[j] );
-				}
-			}
-		}
-
-		for ( int i = 1; i <= n; i++ ) {
-			if ( freqR[i] == maxR ) idxR.push_back( i );
-		}
-
-		for ( int j = 1; j <= m; j++ ) {
-			if ( freqC[j] == maxC ) idxC.push_back( j );
-		}
-
-		int f = 0;
-		
-		for ( auto curR : idxR ) {
-			for ( auto curC : idxC ) {
-				// cout << curR << " " << curC << "\n";
-				
-				int curOcc = freqR[curR] + freqC[curC];
-
-				if ( a[curR][curC] == mx ) curOcc--;
-
-				if ( curOcc == occ ) {
-					mx--;
-					f = 1;
-					break;
-				}
-			}
-
-			if ( f ) break;
-		}
-
-		cout << mx << "\n";
-	}
+	while ( t-- ) solve();
 
 	return 0;
 }

@@ -14,30 +14,27 @@ void solve()
 		}
 	}
 
-	vector<int> row(n), col(m);
-
-	int cnt = 0;
+	map<int, int> mp;
 
 	for ( int i = 0; i < n; i++ ) {
 		for ( int j = 0; j < m; j++ ) {
-			if ( a[i][j] == mx ) {
-				cnt++;
-				row[i]++;
-				col[j]++;
-			}
+			if ( a[i][j] == mx ) mp[j]++;
 		}
 	}
 
 	for ( int i = 0; i < n; i++ ) {
 		for ( int j = 0; j < m; j++ ) {
-			int curCnt = row[i] + col[j];
-			
-			if ( a[i][j] == mx ) curCnt--;
+			if ( a[i][j] == mx ) mp[j]--;
+			if ( !mp[j] ) mp.erase( j );  
+		}
 
-			if ( curCnt == cnt ) {
-				cout << mx - 1 << "\n";
-				return;
-			}
+		if ( mp.size() <= 1 ) {
+			cout << mx - 1 << "\n";
+			return;
+		}
+
+		for ( int j = 0; j < m; j++ ) {
+			if ( a[i][j] == mx ) mp[j]++;
 		}
 	}
 

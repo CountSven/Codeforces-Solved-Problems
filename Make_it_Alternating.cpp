@@ -7,32 +7,33 @@ int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    
     int t;
     cin >> t;
-
+    
     while ( t-- ) {
         string s;
         cin >> s;
-
-        long long cnt = 0, cur = 1, res = 1;
-
-        for ( int i = 1; i < (int)s.size(); i++ ) {
-            if ( s[i] == s[i-1] ) cur++;
-            else {
-                res = res * cur % mod;
-                cnt += cur - 1;
-                cur = 1;
+        
+        int n = s.size();
+        
+        long long cnt = 1, cur = 1, res = 1;
+        
+        for ( int i = 1; i < n; i++ ) {
+            if (s[i] != s[i-1] ) {
+                cur++;
+                res = res * cnt % mod;
+                cnt = 1;
             }
+            else cnt++;
         }
-
-        res = res * cur % mod;
-        cnt += cur - 1;
-
-        for ( int i = 1; i <= cnt; i++ ) res = res * i % mod;
-
-        cout << cnt << " " << res << "\n";    
+        
+        res = res * cnt % mod;
+        
+        for ( int i = 1; i <= ( n - cur ); i++ ) res = res * i % mod;
+        
+        cout << n - cur << " " << res << "\n";
     }
-
+    
     return 0;
 }

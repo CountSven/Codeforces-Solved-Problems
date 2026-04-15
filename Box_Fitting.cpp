@@ -12,37 +12,27 @@ int main()
 	while ( t-- ) {
 		int n, w;
 		cin >> n >> w;
-		int a[n];
-
-		map<int, int> mp;
+		vector<int> freq( 22, 0 );
 
 		for ( int i = 0; i < n; i++ ) {
-			cin >> a[i];
-			mp[a[i]]++;
+			int x;
+			cin >> x;
+			freq[__lg( x )]++;
 		}
-
-		vector<int> vals, cnts;
-
-		for ( auto [x, y] : mp ) {
-			vals.push_back( x );
-			cnts.push_back( y );
-		}
-
-		// for ( auto u : vals ) cout << u << " ";
-		// cout << "\n";
-		// for ( auto u : cnts ) cout << u << " ";
-		// cout << "\n";
 
 		int tmp = n, h = 0;
 
 		while ( tmp ) {
 			h++;
 			int cur = w;
-			for ( int i = vals.size()-1; i >= 0; i-- ) {
-				while ( tmp && cnts[i] && vals[i] <= cur ) {
-					cur -= vals[i];
-					cnts[i]--;
-					tmp--;
+			for ( int i = 21; i >= 0; i-- ) {
+				if ( freq[i] ) {
+					int val = pow( 2, i );
+					while ( freq[i] && cur >= val ) {
+						cur -= val;
+						freq[i]--;
+						tmp--;
+					}
 				}
 			}
 		}

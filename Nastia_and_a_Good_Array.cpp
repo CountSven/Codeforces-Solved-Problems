@@ -24,30 +24,15 @@ int main()
 			}
 		}
 
-		vector<pair<pair<int, int>, pair<int, int>>> v;
-
-		int cur = mn+1;
-
-		for ( int i = mnIdx-1; i >= 0; i-- ) {
-			a[i] = cur;
-			v.push_back( { { mnIdx+1, i+1 }, { mn, cur++ } } );
-		}
-
-		cur = mn+1;
-
-		for ( int i = mnIdx+1; i < n; i++ ) {
-			a[i] = cur;
-			v.push_back( { { mnIdx+1, i+1 }, { mn, cur++ } } );
-		}
-
-		// for ( int i = 0; i < n; i++ ) cout << a[i] << " ";
-		// cout << "\n";
-
-		cout << v.size() << "\n";
-		for ( auto [x, y] : v ) {
-			auto [p, q] = x;
-			auto [r, s] = y;
-			cout << p << " " << q << " " << r << " " << s << "\n";
+		cout << n - 1 << "\n";
+		for ( int i = 0; i < n; i++ ) {
+			if ( i == mnIdx ) continue;
+			if ( i % 2 == mnIdx % 2 ) {
+				cout << mnIdx+1 << " " << i+1 << " " << mn << " " << mn << "\n";
+			}
+			else {
+				cout << mnIdx+1 << " " << i+1 << " " << mn << " " << mn+1 << "\n";
+			}
 		}
 	}
 

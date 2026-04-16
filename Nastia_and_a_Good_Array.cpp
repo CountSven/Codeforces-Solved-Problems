@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+const int PR = 1e9+7;
+
 int main()
 {
 	ios_base::sync_with_stdio(false);
@@ -14,25 +16,11 @@ int main()
 		cin >> n;
 		int a[n];
 
-		int mn = 1e9, mnIdx = 0;
+		for ( int i = 0; i < n; i++ ) cin >> a[i];
 
-		for ( int i = 0; i < n; i++ ) {
-			cin >> a[i];
-			if ( a[i] < mn ) {
-				mn = a[i];
-				mnIdx = i;
-			}
-		}
-
-		cout << n - 1 << "\n";
-		for ( int i = 0; i < n; i++ ) {
-			if ( i == mnIdx ) continue;
-			if ( i % 2 == mnIdx % 2 ) {
-				cout << mnIdx+1 << " " << i+1 << " " << mn << " " << mn << "\n";
-			}
-			else {
-				cout << mnIdx+1 << " " << i+1 << " " << mn << " " << mn+1 << "\n";
-			}
+		cout << n / 2 << "\n";
+		for ( int i = 1; i < n; i += 2 ) {
+			cout << i << " " << i+1 << " " <<  min( a[i-1], a[i] ) << " " << PR << "\n";
 		}
 	}
 

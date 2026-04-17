@@ -6,22 +6,6 @@ int main()
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr);
 
-	vector<int> v(1e6+5, 0);
-
-	for ( int i = 1; i <= 1000000; i++ ) {
-		for ( int j = i; j <= 1000000; j += i ) v[j]++;
-	}
-
-	set<int> st;
-
-	for ( int i = 1; i <= 1000000; i++ ) {
-		if ( v[i] == 2 ) st.insert( i ); 
-	}
-
-	// cout << st.size() << "\n";
-	// for ( auto u : st ) cout << u << " ";
-	// cout << "\n";
-
 	int t;
 	cin >> t;
 

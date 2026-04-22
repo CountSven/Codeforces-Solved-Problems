@@ -31,22 +31,14 @@ void solve()
 		}
 	}
 
-	set<int> must;
-
-	for ( int i = 0; i < n; i++ ) must.insert( b[i] );
-
-	int mxPos = -1;
-
-	for ( int i = 0; i < m; i++ ) {
-		if ( must.find( d[i] ) != must.end() ) {
-			mxPos = max( mxPos, i );
+	for ( int i = 0; i < n; i++ ) {
+		if ( b[i] == d[m-1] ) {
+			cout << "YES" << "\n";
+			return;
 		}
 	}
 
-	// cout << mxPos << "\n";
-
-	if ( mxPos == m-1 ) cout << "YES" << "\n";
-	else cout << "NO" << "\n";
+	cout << "NO" << "\n";
 }
 
 int main()

@@ -16,28 +16,25 @@ int main()
 
 		for ( int i = 0; i < n; i++ ) cin >> a[i];
 
-		long long sum = 0, add = 0;
+		long long l = 0, r = 2e14, add = 0;
 
-		for ( int i = 0; i+1 < n; i++ )	{
-			sum += a[i];
-			long long cur = a[i+1] * 100LL;
-			if ( cur > ( k * sum ) ) {
-				long long l = 1, r = 1e18, need = 1e18;
+		while ( l <= r ) {
+			long long mid = l + ( r - l ) / 2;
+			long long sum = mid, f = 0;
 
-				while ( l <= r ) {
-					unsigned long long mid = l + ( r - l ) / 2;
-					unsigned long long tot = 1LL * k * ( sum + mid );
-
-					if ( cur <= tot ) {
-						need = mid;
-						r = mid-1;
-					}
-					else l = mid+1;
+			for ( int i = 0; i+1 < n; i++ ) {
+				sum += a[i];
+				if ( ( a[i+1] * 100LL ) > ( k * sum ) ) {
+					f = 1;
+					break;
 				}
-
-				sum += need;
-				add += need;
 			}
+
+			if ( !f ) {
+				add = mid;
+				r = mid - 1;
+			}
+			else l = mid + 1;
 		}
 
 		cout << add << "\n";

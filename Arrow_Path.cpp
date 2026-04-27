@@ -3,7 +3,7 @@ using namespace std;
 
 int n, f = 0;
 char c[2][200005];
-int vis[2][200005][2];
+int vis[2][200005];
 
 int dr[4] = { -1, 1, 0, 0 };
 int dc[4] = { 0, 0, -1, 1 };
@@ -15,7 +15,7 @@ void dfs( int i, int j, int tp )
 		return;
 	}
 
-	vis[i][j][tp] = 1;
+	vis[i][j] = 1;
 
 	if ( tp == 0 ) {
 		for ( int cur = 0; cur < 4; cur++ ) {
@@ -23,16 +23,16 @@ void dfs( int i, int j, int tp )
 			int nj = j + dc[cur];
 
 			if ( ni >= 0 && ni < 2 && nj >= 0 && nj < n ) {
-				if ( !vis[ni][nj][1] ) dfs( ni, nj, 1 );
+				if ( !vis[ni][nj] ) dfs( ni, nj, 1 );
 			}
 		}
 	}
 	else {
 		if ( c[i][j] == '>' ) {
-			if ( !vis[i][j+1][0] ) dfs( i, j+1, 0 );
+			if ( !vis[i][j+1] ) dfs( i, j+1, 0 );
 		}
 		else {
-			if ( !vis[i][j-1][0] ) dfs( i, j-1, 0 );
+			if ( !vis[i][j-1] ) dfs( i, j-1, 0 );
 		}
 	}
 }
@@ -53,9 +53,7 @@ int main()
 		}
 
 		for ( int i = 0; i < 2; i++ ) {
-			for ( int j = 0; j < n; j++ ) {
-				for ( int k = 0; k < 2; k++ ) vis[i][j][k] = 0;
-			}
+			for ( int j = 0; j < n; j++ ) vis[i][j] = 0;
 		}
 
 		f = 0;

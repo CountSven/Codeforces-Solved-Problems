@@ -12,28 +12,23 @@ int main()
 	while ( t-- ) {
 		int n;
 		cin >> n;
-		int a[n];
 
-		for ( int i = 0; i < n; i++ ) cin >> a[i];
-
-		long long sum = 0, mn = a[0], mnPos = 0;
+		long long mn = 0, mx = 0;
 
 		for ( int i = 0; i < n; i++ ) {
-			sum += a[i];
-			if ( sum < mn ) {
-				mn = sum;
-				mnPos = i;
-			}
+			int x;
+			cin >> x;
+			long long val1 = mn + x;
+			long long val2 = abs( mn + x );
+			long long val3 = mx + x;
+			long long val4 = abs( mx + x );
+
+			// cout << val1 << " " << val2 << " " << val3 << " " << val4 << "\n";
+			mn = min( { val1, val2, val3, val4 } );
+			mx = max( { val1, val2, val3, val4 } );
 		}
 
-		sum = 0;
-
-		for ( int i = 0; i < n; i++ ) {
-			sum += a[i];
-			if ( i == mnPos ) sum = abs( sum );
-		}
-
-		cout << sum << "\n";
+		cout << max( abs( mn ), abs( mx ) ) << "\n";
 	}
 
 	return 0;

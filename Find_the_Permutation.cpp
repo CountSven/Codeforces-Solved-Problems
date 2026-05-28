@@ -12,27 +12,27 @@ int main()
 	while ( t-- ) {
 		int n;
 		cin >> n;
-		vector<int> cnt( n+1 ), pos( n+1, 0 );
+
+		vector<int> pos( n+1, 0 );
 
 		for ( int i = 1; i <= n; i++ ) {
-			int cur = 0;
+			string s;
+			cin >> s;
+			s = '#' + s;
+
+			int cnt = 0;
+
 			for ( int j = 1; j <= n; j++ ) {
-				char c;
-				cin >> c;
-				if ( c == '1' && i < j ) cur++;
+				if ( s[j] == '1' && i < j ) cnt++;
 			}
-			cnt[i] = cur;
-		}
 
-		for ( int i = 1; i <= n; i++ ) {
 			for ( int j = n; j >= 1; j-- ) {
-				if ( !pos[j] && !cnt[i] ) {
+				if ( pos[j] ) continue;
+				if ( !cnt ) {
 					pos[j] = i;
 					break;
 				}
-				else {
-					if ( !pos[j] ) cnt[i]--; 
-				}
+				cnt--;
 			}
 		}
 

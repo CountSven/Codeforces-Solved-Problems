@@ -20,20 +20,16 @@ int main()
 			cin >> s;
 			s = '#' + s;
 
-			int cnt = 0;
+			int cur = 1;
 
-			for ( int j = 1; j <= n; j++ ) {
-				if ( s[j] == '1' && i < j ) cnt++;
+			for ( int j = 1; j < i; j++ ) {
+				if ( s[j] == '1' ) cur++; 
+			}
+			for ( int j = i+1; j <= n; j++ ) {
+				if ( s[j] == '0' ) cur++;
 			}
 
-			for ( int j = n; j >= 1; j-- ) {
-				if ( pos[j] ) continue;
-				if ( !cnt ) {
-					pos[j] = i;
-					break;
-				}
-				cnt--;
-			}
+			pos[cur] = i;
 		}
 
 		for ( int i = 1; i <= n; i++ ) cout << pos[i] << " ";

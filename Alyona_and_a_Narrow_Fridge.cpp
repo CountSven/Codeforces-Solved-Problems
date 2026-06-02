@@ -10,21 +10,29 @@ int main()
 	ll n, h;
 	cin >> n >> h;
 
-	vector<ll> a(n), b;
+	vector<pair<ll, int>> a(n);
 
-	for ( int i = 0; i < n; i++ ) cin >> a[i];
+	for ( int i = 0; i < n; i++ ) {
+		cin >> a[i].first;
+		a[i].second = i;
+	}
+
+	sort( a.begin(), a.end() );
 
 	ll l = 0, r = n-1, k = 0;
 
 	while ( l <= r ) {
 		ll mid = l + ( r - l ) / 2;
 
-		for ( int i = 0; i <= mid; i++ ) b.push_back( a[i] );
-		sort( b.rbegin(), b.rend() );
+		vector<ll> b;
+
+		for ( int i = 0; i < n; i++ ) {
+			if ( a[i].second <= mid ) b.push_back( a[i].first ); 
+		}
 
 		ll curH = 0;
 
-		for ( int i = 0; i <= mid; i += 2 ) {
+		for ( int i = b.size()-1; i >= 0; i -= 2 ) {
 			curH += b[i];
 			if ( curH > h ) break;
 		}
@@ -34,8 +42,6 @@ int main()
 			l = mid + 1;
 		}
 		else r = mid - 1;
-
-		b.clear();
 	}
 
 	cout << k + 1 << "\n";

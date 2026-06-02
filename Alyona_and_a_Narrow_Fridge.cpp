@@ -14,27 +14,31 @@ int main()
 
 	for ( int i = 0; i < n; i++ ) cin >> a[i];
 
-	int k = 1;
+	ll l = 0, r = n-1, k = 0;
 
-	for ( int i = n-1; i >= 0; i-- ) {
-		for ( int j = 0; j <= i; j++ ) b.push_back( a[j] );
+	while ( l <= r ) {
+		ll mid = l + ( r - l ) / 2;
+
+		for ( int i = 0; i <= mid; i++ ) b.push_back( a[i] );
 		sort( b.rbegin(), b.rend() );
 
 		ll curH = 0;
 
-		for ( int j = 0; j <= i; j += 2 ) {
-			curH += b[j];
+		for ( int i = 0; i <= mid; i += 2 ) {
+			curH += b[i];
 			if ( curH > h ) break;
 		}
 
 		if ( curH <= h ) {
-			k = i + 1;
-			break;
+			k = mid;
+			l = mid + 1;
 		}
+		else r = mid - 1;
+
 		b.clear();
 	}
 
-	cout << k << "\n";
+	cout << k + 1 << "\n";
 
 	return 0;
 }

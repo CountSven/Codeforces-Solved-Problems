@@ -8,38 +8,32 @@ int main()
 
 	int n;
 	cin >> n;
-	int a[n];
+	int a[n], dp[n][3];
 
 	for ( int i = 0; i < n; i++ ) cin >> a[i];
 
-	int cnt = 0, last = -1;
-	
 	for ( int i = 0; i < n; i++ ) {
-		if ( a[i] == 0 ) {
-			cnt++;
-			last = 0;
-		}
-		else if ( a[i] == 1 ) {
-			if ( last == 1 ) {
-				cnt++;
-				last = 0;
-			}
-			else last = 1;
-		}
-		else if ( a[i] == 2 ) {
-			if ( last == 2 ) {
-				cnt++;
-				last = 0;
-			}
-			else last = 2;
-		}
-		else {
-			if ( last == 1 ) last = 2;
-			else if ( last == 2 ) last = 1;
-		}
+		for ( int j = 0; j < 3; j++ ) dp[i][j] = 1e9;
 	}
 
-	cout << cnt << "\n";
+	dp[0][0] = 1;
+
+	if ( a[0] == 1 || a[0] == 3 ) dp[0][1] = 0; 
+	if ( a[0] == 2 || a[0] == 3 ) dp[0][2] = 0; 
+
+	for ( int i = 1; i < n; i++ ) {
+		dp[i][0] = 1 + min( { dp[i-1][0], dp[i-1][1], dp[i-1][2] } );
+		
+		if ( a[i] == 1 || a[i] == 3 ) dp[i][1] = min( dp[i-1][0], dp[i-1][2] );
+		if ( a[i] == 2 || a[i] == 3 ) dp[i][2] = min( dp[i-1][0], dp[i-1][1] );
+	}
+
+	// for ( int i = 0; i < n; i++ ) {
+	// 	for ( int j = 0; j < 3; j++ ) cout << dp[i][j] << " ";
+	// 	cout << "\n";
+	// }
+
+	cout << min( { dp[n-1][0], dp[n-1][1], dp[n-1][2] } ) << "\n";
 
 	return 0;
 }

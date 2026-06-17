@@ -6,18 +6,31 @@ int main()
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr);
 
-	int t;
-	cin >> t;
+	string s;
+	cin >> s;
 
-	while ( t-- ) {
-		string s;
-		cin >> s;
+	vector<int> v;
+	set<int> st;
 
-		if ( s.size() % 2 ) cout << "NO" << "\n";
-		else if ( s[0] == ')' ) cout << "NO" << "\n";
-		else if ( s.back() == '(' ) cout << "NO" << "\n";
-		else cout << "YES" << "\n";
+	for ( int i = 0; i < s.size(); i++ ) {
+		if ( s[i] == '(' ) v.push_back( i );
+		else st.insert( i );
 	}
+
+	reverse( v.begin(), v.end() );
+
+	int cnt = 0;
+
+	for ( int i = 0; i < v.size(); i++ ) {
+		auto cur = st.upper_bound( v[i] );
+		if ( cur == st.end() ) continue;
+		else {
+			st.erase( *cur );
+			cnt += 2;
+		}
+	}
+
+	cout << cnt << "\n";
 
 	return 0;
 }

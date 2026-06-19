@@ -23,14 +23,12 @@ int main()
 
 			ll res = a[0];
 
-			if ( k == 1 ) {
-				for ( int i = 1; i < n; i++ ) res = min( res, a[i] - a[i-1] );
-			}
-			else {
+			for ( int i = 1; i < n; i++ ) res = min( res, a[i] - a[i-1] );
+
+			if ( k == 2 ) {
 				for ( int i = 0; i < n; i++ ) {
 					for ( int j = i+1; j < n; j++ ) {
 						ll val = a[j] - a[i];
-						res = min( res, val );
 						auto ub = upper_bound( a, a+n, val ) - a;
 						if ( ub < n ) res = min( res, a[ub] - val );
 						ub--;

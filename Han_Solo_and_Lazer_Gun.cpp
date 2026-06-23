@@ -9,43 +9,29 @@ int main()
 	int n, x, y;
 	cin >> n >> x >> y;
 
-	vector<pair<int, int>> v;
-
-	int lr = 0, ud = 0;
+	set<pair<int, int>> st;
 
 	for ( int i = 0; i < n; i++ ) {
 		int xx, yy;
 		cin >> xx >> yy;
-		if ( xx == x ) ud = 1;
-		else if ( yy == y ) lr = 1;
-		else {
-			int f = 0;
+		
+		xx -= x;
+		yy -= y;
 
-			for ( auto [x1, y1] : v ) {
-				if ( xx * x1 > 0 && yy * y1 > 0 ) {
-					if ( abs( abs(xx) - abs(x1) ) == abs( abs(yy) - abs(y1) ) ) {
-						if ( abs( abs(xx) - abs(x) ) == abs( abs(yy) - abs(y) ) ) {
-							f = 1;
-							break;
-						}
-					}
-				}
-			}
+		int g = __gcd( xx, yy );
 
-			// cout << i << " " << f << "\n";
+		xx /= g;
+		yy /= g;
 
-			if ( !f ) {
-				v.push_back( { xx, yy } );
-				v.push_back( { -xx, -yy } );
-			}
+		if ( st.find( { xx, yy } ) == st.end() ) {
+			st.insert( { xx, yy } );
+			xx *= -1;
+			yy *= -1;
+			st.insert( { xx, yy } );
 		}
 	}
 
-	// cout << v.size() << "\n";
-
-	int res = lr + ud + ( (int)v.size() / 2 );
-
-	cout << res << "\n";
+	cout << (int)st.size() / 2 << "\n";
 
 	return  0;
 }

@@ -8,31 +8,27 @@ int main()
 
 	int n;
 	cin >> n;
-	deque<int> d1, d2, tmp1, tmp2;
+	deque<int> d1, d2;
 
 	int k1;
 	cin >> k1;
 
 	d1.resize( k1 );
-	tmp1.resize( k1 );
 
-	for ( int i = 0; i < k1; i++ ) {
-		cin >> d1[i];
-		tmp1[i] = d1[i];
-	}
+	for ( int i = 0; i < k1; i++ ) cin >> d1[i];
 
 	int k2;
 	cin >> k2;
 
 	d2.resize( k2 );
-	tmp2.resize( k2 );
 
-	for ( int i = 0; i < k2; i++ ) {
-		cin >> d2[i];
-		tmp2[i] = d2[i];
-	}
+	for ( int i = 0; i < k2; i++ ) cin >> d2[i];
 
 	int cnt = 0, res;
+
+	set<pair<deque<int>, deque<int>>> st;
+
+	st.insert( { d1, d2 } );
 
 	while ( 1 ) {
 		if ( d1.front() > d2.front() ) {
@@ -60,20 +56,11 @@ int main()
 			res = 2;
 			break;
 		}
-		int f = 1;
-		if ( d1.size() == tmp1.size() && d2.size() == tmp2.size() ) {
-			for ( int i = 0; i < d1.size(); i++ ) {
-				if ( d1[i] != tmp1[i] ) f = 0;
-			}
-			for ( int i = 0; i < d2.size(); i++ ) {
-				if ( d2[i] != tmp2[i] ) f = 0;
-			}
-		}
-		else f = 0;
-		if ( f || cnt > 1e7 ) {
+		if ( st.find( { d1, d2 } ) != st.end() ) {
 			cnt = -1;
 			break;
 		}
+		else st.insert( { d1, d2 } );
 	}
 
 	if ( cnt == -1 ) cout << cnt << "\n";

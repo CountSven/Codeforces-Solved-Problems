@@ -16,24 +16,18 @@ int main()
 
 		for ( int i = 0; i < n; i++ ) cin >> a[i];
 
-		vector<map<array<int, 2>, vector<int>>> v(3);
-
-		for ( int i = 0; i+2 < n; i++ ) {
-			v[0][{ a[i], a[i+1] }].push_back( a[i+2] );
-			v[1][{ a[i], a[i+2] }].push_back( a[i+1] );
-			v[2][{ a[i+1], a[i+2] }].push_back( a[i] );
-		}
+		map<tuple<int, int, int>, long long> mp;
 
 		long long cnt = 0;
 
-		for ( int i = 0; i < 3; i++ ) {
-			for ( auto [x, y] : v[i] ) { 
-				map<int, int> mp;
-				for ( auto u : y ) mp[u]++;
-				long long cur = 0;
-				for ( auto u : y ) cur += ( y.size() - mp[u] );
-				cnt += cur / 2;
-			}
+		for ( int i = 0; i+2 < n; i++ ) {
+			cnt += mp[{ a[i], a[i+1], 0 }] + mp[{ a[i], 0, a[i+2] }] + mp[{ 0, a[i+1], a[i+2] }];
+			cnt -= 3LL * ( mp[{ a[i], a[i+1], a[i+2] }] );
+
+			mp[{ a[i], a[i+1], 0 }]++;
+			mp[{ a[i], 0, a[i+2] }]++;
+		 	mp[{ 0, a[i+1], a[i+2] }]++;
+		 	mp[{ a[i], a[i+1], a[i+2] }]++;
 		}
 
 		cout << cnt << "\n";

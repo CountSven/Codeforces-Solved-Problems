@@ -14,22 +14,21 @@ int main()
 		string s;
 		cin >> n >> s;
 
-		int sz = -1;
+		int sz = 1e9;
 
-		for ( int len = 2; len <= 7; len++ ) {
-			if ( sz > 0 ) break;
-			for ( int i = 0; i+len <= n; i++ ) {
-				if ( sz > 0 ) break;
-				map<char, int> mp;
-				for ( int j = i, cur = 0; j < n && cur < len; j++, cur++ ) mp[s[j]]++;
-				if ( mp['a'] > mp['b'] && mp['a'] > mp['c'] ) {
-					sz = len;
-					break;
-				}
+		for ( int len = 2; len <= min( 7, n ); len++ ) {
+			vector<int> cnt( 3, 0 );
+			for ( int i = 0; i < min( len, n ); i++ ) cnt[s[i] - 'a']++;
+			if ( cnt[0] > max( cnt[1], cnt[2] ) ) sz = min( sz, len );
+			for ( int i = len, j = 0; i < n; i++, j++ ) {
+				cnt[s[i] - 'a']++;
+				cnt[s[j] - 'a']--;
+				if ( cnt[0] > max( cnt[1], cnt[2] ) ) sz = min( sz, len );
 			}
 		}
 
-		cout << sz << "\n";
+		if ( sz == 1e9 ) cout << -1 << "\n";
+		else cout << sz << "\n";
 	} 
 
 	return 0;

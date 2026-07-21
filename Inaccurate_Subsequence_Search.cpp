@@ -1,8 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-vector<int> have( 1e6+5, 0 ), need( 1e6+5, 0 );
-
 int main()
 {
 	ios_base::sync_with_stdio(false);
@@ -14,25 +12,24 @@ int main()
 	while ( t-- ) {
 		int n, m, k;
 		cin >> n >> m >> k;
-		int a[n], b[m];
+		int a[n];
 
-		set<int> ele;
+		map<int, int> have, need;
 
 		for ( int i = 0; i < n; i++ ) {
 			cin >> a[i];
 			if ( i < m ) have[a[i]]++;
 		}
-		for ( int i = 0; i < m; i++ ) {
-			cin >> b[i];
-			need[b[i]]++;
-			ele.insert( b[i] );
+		for ( int i = 0, x; i < m; i++ ) {
+			cin >> x;
+			need[x]++;
 		}
 
 		multiset<int> missing;
 
-		for ( auto u : ele ) {
-			int cur = need[u] - min( need[u], have[u] );
-			while ( cur-- ) missing.insert( u );
+		for ( auto [x, y] : need ) {
+			int cur = y - min( y, have[x] );
+			while ( cur-- ) missing.insert( x );
 		}
 
 		// for ( auto u : missing ) cout << u << " ";
@@ -55,11 +52,6 @@ int main()
 		}
 
 		cout << cnt << "\n";
-
-		for ( int i = 0; i < n; i++ ) {
-			have[a[i]] = 0;
-			if ( i < m ) need[b[i]] = 0;
-		}
 	}
 
 	return 0;

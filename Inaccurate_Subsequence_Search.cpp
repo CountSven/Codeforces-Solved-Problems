@@ -45,9 +45,8 @@ int main()
 			if ( need[val] > have[val] ) missing.insert( val );
 			val = a[i];
 			have[val]++;
-			if ( missing.find( val ) != missing.end() ) {
-				missing.erase( missing.find( val ) );
-			}
+			auto it = missing.find( val );
+			if ( it != missing.end() ) missing.erase( it );
 			if ( m - (int)missing.size() >= k ) cnt++;
 		}
 

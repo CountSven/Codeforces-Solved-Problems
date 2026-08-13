@@ -12,36 +12,33 @@ int main()
 	while ( t-- ) {
 		int n;
 		cin >> n;
-		vector<int> a(n), smx(n), b;
+		vector<int> a(n), freq( n+1, 0 ), b;
 
-		for ( int i = 0; i < n; i++ ) cin >> a[i];
-
-		set<int> st;
-
-		int val = 0;
-
-		for ( int i = n-1; i >= 0; i-- ) {
-			st.insert( a[i] );
-			while( st.count( val ) ) val++;
-			smx[i] = val;
+		for ( int i = 0; i < n; i++ ) {
+			cin >> a[i];
+			freq[a[i]]++;
 		}
 
-		for ( int i = 0; i < n; ) {
-			int j = i;
-			val = 0;
-			st.clear();
-			while ( j < n ) {
-				st.insert( a[j++] );
-				while( st.count( val ) ) val++;
-				if ( val == smx[i] ) break;
+		set<int> cur, removed;
+
+		for ( int i = 0; i <= n; i++ ) cur.insert( i );
+
+		for ( int i = 0; i < n; i++ ) {
+			freq[a[i]]--;
+			cur.erase( a[i] );
+			removed.insert( a[i] );
+			
+			int val = *cur.begin();
+			if ( !freq[val] ) {
+				b.push_back( val );
+				for ( auto u : removed ) cur.insert( u );
+				removed.clear();		
 			}
-			b.push_back( val );
-			i = j;
 		}
 
 		cout << b.size() << "\n";
 		for ( int i = 0; i < b.size(); i++ ) cout << b[i] << " \n"[i + 1 == b.size()];
-	}
+	} 
 
 	return 0;
 }

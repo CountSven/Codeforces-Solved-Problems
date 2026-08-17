@@ -2,6 +2,44 @@
 using namespace std;
 using ll = long long;
 
+ll n, g, b;
+
+bool check( ll mid )
+{
+	ll blocks = mid / ( g + b );
+	ll good = blocks * g;
+	ll bad = blocks * b;
+	ll rem = mid % ( g + b );
+
+	if ( rem > g ) {
+		good += g;
+		rem -= g;
+		bad += rem;
+	}
+	else good += rem;
+
+	return ( ( good >= ( n + 1 ) / 2 ) && ( good + bad >= n ) );
+}
+
+void solve()
+{
+	cin >> n >> g >> b;
+
+	ll l = 1, r = 2e18, res = 2e18;
+
+	while ( l <= r ) {
+		ll mid = l + ( r - l ) / 2;
+
+		if ( check(mid) ) {
+			res = mid;
+			r = mid - 1;
+		}
+		else l = mid + 1;
+	}
+
+	cout << res << "\n";
+}
+
 int main()
 {
 	ios_base::sync_with_stdio(false);
@@ -10,23 +48,7 @@ int main()
 	int t;
 	cin >> t;
 
-	while ( t-- ) {
-		ll n, g, b;
-		cin >> n >> g >> b;
-
-		ll need = ( n + 1 ) / 2;
-
-		ll div = need / g;
-
-		if ( ( need == g ) || !div ) cout << n << "\n";
-		else {
-			ll days = div * g;
-			days += ( div - 1 ) * b;
-			need -= ( div * g );
-			if ( need ) days += b + need;
-			cout << max( days, n ) << "\n";
-		}
-	}
+	while ( t-- ) solve();
 
 	return 0;
 }

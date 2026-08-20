@@ -12,24 +12,20 @@ int main()
 	while ( t-- ) {
 		int n, m, k;
 		cin >> n >> m >> k;
-		vector<vector<int>> pref(n + 2, vector<int>(m + 2, 0));
-
-		for ( int i = 1; i + k - 1 <= n; i++ ) {
-			for ( int j = 1; j + k - 1 <= m; j++ ) {
-				pref[i][j]++;
-				pref[i + k][j]--;
-				pref[i][j + k]--;
-				pref[i + k][j + k]++;
-			}
-		}
+		vector<vector<int>> v(n + 2, vector<int>(m + 2, 0));
 
 		for ( int i = 1; i <= n; i++ ) {
 			for ( int j = 1; j <= m; j++ ) {
-				pref[i][j] += pref[i][j-1];
+				int lb = max( 1, j - k + 1 );
+				int rb = min( j, m - k + 1 );
+				int ub = max( 1, i - k + 1 );
+				int db = min( i, n - k + 1 );
+				int rng1 = rb - lb + 1;
+				int rng2 = db - ub + 1;
+				v[i][j] = rng1 * rng2;
+				// cout << v[i][j] << " ";
 			}
-			for ( int j = 1; j <= m; j++ ) {
-				pref[i][j] += pref[i-1][j];
-			}
+			// cout << "\n";
 		}
 
 		int w;
@@ -40,7 +36,7 @@ int main()
 
 		for ( int i = 1; i <= n; i++ ) {
 			for ( int j = 1; j <= m; j++ ) {
-				cnt.push_back( pref[i][j] );
+				cnt.push_back( v[i][j] );
 			}
 		}
 

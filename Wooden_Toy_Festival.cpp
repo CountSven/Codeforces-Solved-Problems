@@ -1,6 +1,5 @@
 #include<bits/stdc++.h>
 using namespace std;
-using ll = long long;
 
 int main()
 {
@@ -13,20 +12,20 @@ int main()
 	while ( t-- ) {
 		int n;
 		cin >> n;
-		vector<ll> a(n);
+		int a[n];
 
 		for ( int i = 0; i < n; i++ ) cin >> a[i];
 
-		sort( a.begin(), a.end() );
+		sort( a, a+n );
 
-		ll l = 0, r = 2e12, res = 2e12; 
+		int l = 0, r = 1e9, res = 1e9;
 
 		while ( l <= r ) {
-			ll mid = l + ( r - l ) / 2;
-			ll cur = LLONG_MIN, cnt = 0;
+			int mid = l + ( r - l ) / 2;
+			int cur = a[0] + mid, cnt = 1;
 
-			for ( int i = 0; i < n; i++ ) {
-				if ( llabs( a[i] - cur ) > mid ) {
+			for ( int i = 1; i < n; i++ ) {
+				if ( abs( cur - a[i] ) > mid ) {
 					cur = a[i] + mid;
 					cnt++;
 				}

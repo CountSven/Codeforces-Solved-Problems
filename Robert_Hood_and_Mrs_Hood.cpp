@@ -12,26 +12,30 @@ int main()
 	while ( t-- ) {
 		int n, d, k;
 		cin >> n >> d >> k;
-		vector<pair<int, int>> v(k);
+		vector<int> st( n+2, 0 ), en( n+2, 0 );
 
-		for ( auto &[l, r] : v ) cin >> l >> r;
+		while ( k-- ) {
+			int l, r;
+			cin >> l >> r;
+			st[l]++;
+			en[r + 1]++;
+		} 
 
-		sort( v.begin(), v.end() );
-		
-		multiset<int> mst;
+		int cur = 0;
 
-		int mn = 1e9, mx = -1, mnPos = 1, mxPos = 1;
+		for ( int i = 1; i <= d; i++ ) cur += st[i];
 
-		for ( int i = 1, j = i+d-1, k = 0; j <= n; i++, j++ ) {
-			while ( k < v.size() && v[k].first <= j ) mst.insert( v[k++].second );
-			while( mst.size() && *mst.begin() < i ) mst.erase( mst.begin() );
-			int sz = mst.size();
-			if ( sz > mx ) {
-				mx = sz;
+		int mn = cur, mx = cur, mnPos = 1, mxPos = 1;
+
+		for ( int i = 2, j = i+d-1; j <= n; i++, j++ ) {
+			cur += st[j];
+			cur -= en[i];
+			if ( cur > mx ) {
+				mx = cur;
 				mxPos = i;
 			}
-			if ( sz < mn ) {
-				mn = sz;
+			if ( cur < mn ) {
+				mn = cur;
 				mnPos = i;
 			}
 		}

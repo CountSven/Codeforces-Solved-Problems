@@ -16,15 +16,14 @@ int main()
 
 		for ( int i = 0; i < n; i++ ) cin >> a[i];
 
-		dp[0] = 0;
+		dp[n] = 0;
 
-		for ( int i = 0; i < n; i++ ) {
-			dp[i+1] = min( dp[i+1], dp[i] + 1 );
-			int rng = i + a[i] + 1;
-			if ( rng <= n ) dp[rng] = min( dp[rng], dp[i] );
+		for ( int i = n-1; i >= 0; i-- ) {
+			if ( i + a[i] + 1 <= n ) dp[i] = min( dp[i], dp[i + a[i] + 1] );
+			dp[i] = min( dp[i], 1 + dp[i+1] );
 		}
 
-		cout << dp[n] << "\n";
+		cout << dp[0] << "\n";
  	}
 
 	return 0;

@@ -14,31 +14,44 @@ int main()
 		string s;
 		cin >> n >> k >> m >> s;
 
-		int cur = 0, f = 1;
-		string r;
+		vector<int> pos[26];
+
+		for ( int i = 0; i < m; i++ ) {
+			int d = s[i] - 'a';
+			pos[d].push_back( i );
+		}
+
+		int cur = -1;
+		string res = "";
+		char c;
 
 		for ( int i = 0; i < n; i++ ) {
-			set<char> st;
-			char last = '#';
-			while ( st.size() < k && cur < s.size() ) {
-				if ( !st.count( s[cur] ) ) last = s[cur];
-				st.insert( s[cur] );
-				cur++;
-			}
-			if ( st.size() < k ) {
-				f = 0;
-				for ( int a = 0; a < k; a++ ) {
-					if ( !st.count( 'a' + a ) ) last = 'a' + a;
+			int mx = cur;
+			for ( int j = 0; j < k; j++ ) {
+				auto it = upper_bound( pos[j].begin(), pos[j].end(), cur );
+				if ( it == pos[j].end() ) {
+					mx = m;
+					c = j + 'a';
+				}
+				else {
+					if ( *it > mx ) {
+						mx = *it;
+						c = j + 'a';
+					}
 				}
 			}
-			r += last;
+			cur = mx;
+			res += c;
+			if ( cur == m ) break;
 		}
 
-		if ( f ) cout << "YES" << "\n";
-		else {
+		while ( res.size() < n ) res += c;
+
+		if ( cur == m ) {
 			cout << "NO" << "\n";
-			cout << r << "\n";
+			cout << res << "\n";
 		}
+		else cout << "YES" << "\n";
 	}
 
 	return 0;

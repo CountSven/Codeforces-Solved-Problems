@@ -12,24 +12,29 @@ int main()
 	while ( t-- ) {
 		int n;
 		cin >> n;
-		vector<int> v;
+		int a[n+1];
 
-		int cur = 0;
-
-		for ( int i = 0; i + 3 < n; i++ ) {
-			cur ^= i;
-			v.push_back( i );
+		if ( n == 3 ) {
+			cout << "1 3 2" << "\n";
+			continue;
 		}
 
-		cur ^= ( 1 << 28 );
-		v.push_back( 1 << 28 );
+		int hf = n / 2;
 
-		cur ^= ( 1 << 29 );
-		v.push_back( 1 << 29 );
+		for ( int i = 1, j = 1; j <= hf; i += 2, j++ ) a[i] = j;
+		for ( int i = 2, j = 1; j <= hf; i += 2, j++ ) a[i] = j;
 
-		v.push_back( cur );
+		if ( hf % 2 == 0 ) {
+			for ( int i = 2, j = 1; j <= hf; i += 2, j++ ) a[i] |= ( 1 << 30 );
+		}
+		else {
+			for ( int i = 2, j = 1; j < hf; i += 2, j++ ) a[i] |= ( 1 << 30 );
+			for ( int i = 4, j = 2; j <= hf; i += 2, j++ ) a[i] |= ( 1 << 29 );
+		}
 
-		for ( int i = 0; i < n; i++ ) cout << v[i] << " \n"[i + 1 == n];
+		if ( n % 2 ) a[n] = 0;
+
+		for ( int i = 1; i <= n; i++ ) cout << a[i] << " \n"[i == n]; 
 	}
 
 	return 0;

@@ -1,0 +1,45 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr);
+
+	int t;
+	cin >> t;
+
+	while ( t-- ) {
+		int n, k;
+		string s;
+		cin >> n >> k >> s;
+		int a[n];
+
+		for ( int i = 0; i < n; i++ ) cin >> a[i];
+
+		int l = 0, r = 1e9, res = 1e9;
+
+		while ( l <= r ) {
+			int mid = l + ( r - l ) / 2;
+			int cnt = 0, last = 0;
+			for ( int i = 0; i < n; i++ ) {
+				if ( a[i] > mid ) {
+					if ( s[i] == 'B' ) {
+						cnt += last == 0;
+						last = 1;
+					}
+					else last = 0;
+				}
+			}
+			if ( cnt <= k ) {
+				res = mid;
+				r = mid - 1;
+			}
+			else l = mid + 1;
+		}
+
+		cout << res << "\n";
+	}
+
+	return 0;
+}
